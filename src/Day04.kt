@@ -9,8 +9,8 @@ fun main() {
 
         return Card(
             number = cardText.substringAfter(' ').trimToInt(),
-            winningNumbers = winningNumbers.split(' ').mapNotNull { it.trimToIntOrNull() }.toSet(),
-            ownNumbers = ownNumbers.split(' ').mapNotNull { it.trimToIntOrNull() }.toSet(),
+            winningNumbers = winningNumbers.splitToInts().toSet(),
+            ownNumbers = ownNumbers.splitToInts().toSet(),
         )
     }
 
@@ -58,6 +58,3 @@ data class Card(
     val winningNumbers: Set<Int>,
     val ownNumbers: Set<Int>,
 )
-
-fun String.trimToInt() = trim().toInt()
-fun String.trimToIntOrNull() = trim().toIntOrNull()

@@ -59,3 +59,11 @@ internal fun testAll(
         .let { measureTimedValue { part2Fn(it) } }
         .println("Part 2 output")
 }
+
+fun String.splitToLongs() = split(' ').mapNotNull { it.trimToLongOrNull() }
+fun String.splitToInts() = split(' ').mapNotNull { it.trimToIntOrNull() }
+
+fun String.trimToInt() = trim().toInt()
+fun String.trimToIntOrNull() = trim().toIntOrNull()
+fun String.trimToLong() = trim().toLong()
+fun String.trimToLongOrNull() = trim().toLongOrNull()
