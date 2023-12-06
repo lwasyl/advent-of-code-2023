@@ -48,7 +48,8 @@ internal fun testAll(
 
     if (part2TestSolution == null) return
 
-    readInput("${dayString}_2_test")
+    runCatching { readInput("${dayString}_2_test") }
+        .getOrElse { readInput("${dayString}_test") }
         .let { measureTimedValue { part2Fn(it) } }
         .let {
             it.println("Part 2 test")
