@@ -3,24 +3,24 @@ import kotlin.math.pow
 
 fun main() {
 
-    fun parseCard(input: String): Card {
+    fun parseCard(input: String): Scratchcard {
         val (cardText, numberText) = input.split(':')
         val (winningNumbers, ownNumbers) = numberText.split('|')
 
-        return Card(
+        return Scratchcard(
             number = cardText.substringAfter(' ').trimToInt(),
             winningNumbers = winningNumbers.splitToInts().toSet(),
             ownNumbers = ownNumbers.splitToInts().toSet(),
         )
     }
 
-    fun Card.score() = winningNumbers.intersect(ownNumbers).count()
+    fun Scratchcard.score() = winningNumbers.intersect(ownNumbers).count()
 
     fun part1(input: List<String>): Int {
         return input
             .asSequence()
             .map(::parseCard)
-            .map(Card::score)
+            .map(Scratchcard::score)
             .filter { it >= 1 }
             .map { 2.0.pow(it - 1.0).toInt() }
             .sum()
@@ -53,7 +53,7 @@ fun main() {
     )
 }
 
-data class Card(
+private data class Scratchcard(
     val number: Int,
     val winningNumbers: Set<Int>,
     val ownNumbers: Set<Int>,
