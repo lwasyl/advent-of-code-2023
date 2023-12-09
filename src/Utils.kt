@@ -24,7 +24,7 @@ fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteA
  */
 fun Any?.println(prefix: String? = null) = kotlin.io.println("$prefix: $this")
 
-fun TimedValue<Any>.println(prefix: String? = null) =
+fun TimedValue<out Any>.println(prefix: String? = null) =
     kotlin.io.println("$prefix: $value [${duration.toString(unit = DurationUnit.MILLISECONDS, decimals = 4)}]")
 
 internal fun testAll(
@@ -68,3 +68,24 @@ fun String.trimToInt() = trim().toInt()
 fun String.trimToIntOrNull() = trim().toIntOrNull()
 fun String.trimToLong() = trim().toLong()
 fun String.trimToLongOrNull() = trim().toLongOrNull()
+
+fun lcm(a: Long, b: Long): Long {
+    val larger = if (a > b) a else b
+    val maxLcm = a * b
+    var lcm = larger
+    while (lcm <= maxLcm) {
+        if (lcm % a == 0L && lcm % b == 0L) {
+            return lcm
+        }
+        lcm += larger
+    }
+    return maxLcm
+}
+
+fun lcm(numbers: List<Long>): Long {
+    var result = numbers[0]
+    for (i in 1 until numbers.size) {
+        result = lcm(result, numbers[i])
+    }
+    return result
+}
