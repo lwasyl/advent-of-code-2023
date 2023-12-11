@@ -137,14 +137,13 @@ private data class Day10Input(
     val maze: Maze,
 )
 
-private data class Coords(val row: Int, val col: Int) {
+data class Coords(val row: Int, val col: Int)
 
-    fun go(direction: MazeDirection) = when (direction) {
-        N -> copy(row = row - 1)
-        S -> copy(row = row + 1)
-        E -> copy(col = col + 1)
-        W -> copy(col = col - 1)
-    }
+private fun Coords.go(direction: MazeDirection) = when (direction) {
+    N -> copy(row = row - 1)
+    S -> copy(row = row + 1)
+    E -> copy(col = col + 1)
+    W -> copy(col = col - 1)
 }
 
 private typealias Maze = List<List<Char>>
