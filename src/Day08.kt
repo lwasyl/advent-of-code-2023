@@ -79,19 +79,12 @@ fun main() {
             .let(::lcm)
     }
 
-    readInput("Day08_test_2")
-        .let { measureTimedValue { part1(it) } }
-        .let {
-            it.println("Part 1 test 2")
-            check(it.value == 6)
-        }
-
     testAll(
         day = 8,
         part1Fn = ::part1,
-        part1TestSolution = 2,
+        part1TestSolutions = listOf(2, 6),
         part2Fn = ::part2,
-        part2TestSolution = 6L,
+        part2TestSolutions = listOf(6L),
     )
 }
 

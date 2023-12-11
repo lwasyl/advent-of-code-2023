@@ -34,26 +34,60 @@ internal fun testAll(
     part2Fn: KFunction1<List<String>, Any>,
     part2TestSolution: Any?,
 ) {
+    testAll(
+        day = day,
+        part1Fn = part1Fn,
+        part1TestSolutions = listOf(part1TestSolution),
+        part2Fn = part2Fn,
+        part2TestSolutions = listOfNotNull(part2TestSolution),
+    )
+}
+
+internal fun testAll(
+    day: Int,
+    part1Fn: KFunction1<List<String>, Any>,
+    part1TestSolutions: List<Any>,
+    part2Fn: KFunction1<List<String>, Any>,
+    part2TestSolutions: List<Any>,
+) {
     val dayString = "Day${String.format("%02d", day)}"
-    readInput("${dayString}_test")
-        .let { measureTimedValue { part1Fn(it) } }
-        .let {
-            it.println("Part 1 test")
-            check(it.value == part1TestSolution)
+    sequence {
+        var index = 0
+        while (true) {
+            yield(index to "${dayString}_test${if (index == 0) "" else "_${index + 1}"}")
+            index++
+        }
+    }
+        .map { it.first to runCatching { readInput(it.second) }.getOrNull() }
+        .takeWhile { it.second != null }
+        .forEach { (idx, input) ->
+            measureTimedValue { part1Fn(input!!) }
+                .let {
+                    it.println("Part 1 test [$idx]")
+                    check(it.value == part1TestSolutions[idx])
+                }
         }
 
     readInput(dayString)
         .let { measureTimedValue { part1Fn(it) } }
         .println("Part 1 output")
 
-    if (part2TestSolution == null) return
-
-    runCatching { readInput("${dayString}_2_test") }
-        .getOrElse { readInput("${dayString}_test") }
-        .let { measureTimedValue { part2Fn(it) } }
-        .let {
-            it.println("Part 2 test")
-            check(it.value == part2TestSolution)
+    if (part2TestSolutions.isEmpty()) return
+    sequence {
+        var index = 0
+        while (true) {
+            yield(index to "${dayString}_2_test${if (index == 0) "" else "_${index + 1}"}")
+            index++
+        }
+    }
+        .map { it.first to runCatching { readInput(it.second) }.getOrNull() }
+        .takeWhile { it.second != null }
+        .forEach { (idx, input) ->
+            measureTimedValue { part2Fn(input!!) }
+                .let {
+                    it.println("Part 2 test [$idx]")
+                    check(it.value == part2TestSolutions[idx])
+                }
         }
 
     readInput(dayString)
