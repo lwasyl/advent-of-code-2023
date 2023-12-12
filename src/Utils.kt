@@ -95,8 +95,8 @@ internal fun testAll(
         .println("Part 2 output")
 }
 
-fun String.splitToLongs() = split(' ').mapNotNull { it.trimToLongOrNull() }
-fun String.splitToInts() = split(' ').mapNotNull { it.trimToIntOrNull() }
+fun String.splitToLongs(delimiter: Char = ' ') = split(delimiter).mapNotNull { it.trimToLongOrNull() }
+fun String.splitToInts(delimiter: Char = ' ') = split(delimiter).mapNotNull { it.trimToIntOrNull() }
 
 fun String.trimToInt() = trim().toInt()
 fun String.trimToIntOrNull() = trim().toIntOrNull()
